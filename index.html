@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        section {
+            width: 100vw;
+            background-color: antiquewhite;
+            height: 30vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: auto;
+            min-height: 70vh;
+            padding: 1em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2em;
+            background-color: rgb(0, 0, 0);
+        }
+
+        .img {
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <section>
+        <!--Form uload img-->
+        <input type="file">
+    </section>
+    <main>
+        <!--Img list-->
+
+        <img class="img" id="img">
+
+    </main>
+
+    <script type="module">
+        // get all div here, using documents
+        const main = document.querySelector('main');
+
+        function layoutImgDiv(styleObj, div) {
+            console.log('Layout :: ', styleObj);
+
+            const mapStyles = Object.entries(styleObj);
+            div.forEach((element, i) => {
+                mapStyles.forEach(([s, value], i) => {
+                    console.log('properties :: ', s);
+                    console.log('values :: ', value);
+                    element.style[s] = value;
+                })
+            });
+        }
+
+        const hostReq = 'http://localhost:4000/image';
+
+       async function getImage(url) {
+            try {
+                const res = await fetch(url);
+                const json = await res.json();
+                // console.log('Json form --> ', json.image_source);
+                return json.image_source;
+            } catch(err) {
+                console.error(err)
+            }
+        }
+
+        const imageSource = await getImage(hostReq);
+
+        // console.log('Image Source ---> ', imageSource);
+        const imgDiv = Array.from({ length: 16 }, (_, i) => document.createElement('div'));
+        const withAttr = imgDiv.map((div, i) => {
+            div.setAttribute('class', `item-${i}`);
+            return div;
+        })
+
+        const fragment = document.createDocumentFragment();
+
+        withAttr.forEach((element) => {
+            fragment.appendChild(element);
+        })
+
+        main.appendChild(fragment);
+
+        const stylesList = {
+            width : '200px',
+            height : '200px',
+            // backgroundImage: `url(data:image/png;base64,${imageSource})`
+        }
+
+        const imgs = document.getElementById('img');
+        imgs.src = `(data:image/png;base64,${imageSource})`
+
+
+        layoutImgDiv(stylesList, withAttr);
+
+        //
+
+
+    </script>
+</body>
+
+</html>

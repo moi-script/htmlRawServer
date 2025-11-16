@@ -1,0 +1,41 @@
+6. Serve a static file
+
+Return a file index.html from disk using streams.
+
+7. Serve different content types
+
+Send correct headers for:
+
+.html / .css  / .js / .json / .png
+
+
+
+8. Handle POST requests
+
+Receive a JSON body and respond with the same data (echo server).
+
+9. Create a simple API
+
+GET /todos
+POST /todos
+DELETE /todos/:id
+Everything stored in memory.
+
+10. Add error handling
+
+Return 404 for unknown routes
+Return 400 for bad JSON
+Return 500 for thrown errors
+
+
+To do tommoros
+
+--> read about something in images type
+
+--> present a index web using own server
+--> web should have post and get all images available using file as local data
+--> this is manual implementation of accepting browser result as static file generated
+--> also manually handling url path
+--> static file manipulation 
+--> additionaly it contains streams for file and img reading
+--> also have error handling 
